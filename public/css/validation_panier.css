@@ -1,0 +1,95 @@
+.validation-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.validation-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.empty-msg {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+}
+
+.panier-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.article-list {
+    flex: 2;
+}
+
+.article-item {
+    display: flex;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.05);
+    gap: 15px;
+    align-items: center;
+}
+
+.article-item img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.article-item h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.article-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.recap-section {
+    flex: 1;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.recap-section h2 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.total-amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: #27ae60;
+    margin-bottom: 25px;
+}
+
+.btn-payer {
+    background-color: #27ae60;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-payer:hover {
+    background-color: #219150;
+}

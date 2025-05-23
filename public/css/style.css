@@ -1,0 +1,122 @@
+/* public/css/style.css */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3 {
+    color: #2c3e50;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.btn {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.header-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.nav_header {
+    display: flex;
+    align-items: center;
+    padding: 10px 30px;
+}
+
+.nav_header .img_logo {
+    height: 45px;
+    margin-right: 20px;
+}
+
+.nav_links {
+    list-style: none;
+    display: flex;
+    margin-left: auto;
+    gap: 15px;
+    padding: 0;
+}
+
+.img_lien {
+    height: 42px;
+    width: 42px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.img_lien:hover {
+    transform: scale(1.1);
+}
+
+.btn-dark-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+}
+
+body.dark-mode .header-container {
+    background-color: #2c2c2c;
+    border-bottom: 1px solid #444;
+}

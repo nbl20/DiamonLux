@@ -1,0 +1,66 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+}
+
+.container-ventes {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.container-ventes h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.empty-msg {
+    text-align: center;
+    color: #777;
+    font-size: 1.1em;
+}
+
+.vente-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vente-table thead {
+    background-color: #2c3e50;
+    color: white;
+}
+
+.vente-table th,
+.vente-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.vente-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.vente-table img {
+    width: 60px;
+    height: auto;
+    border-radius: 6px;
+}
+
+.badge {
+    color: green;
+    font-weight: bold;
+}
+
+.total {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: green;
+}
