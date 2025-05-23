@@ -30,7 +30,7 @@
 
                 <?php
                 if (isset($_SESSION['user_email'])) {
-                    $imageSrc = (!empty($_SESSION['user_image']) && str_starts_with($_SESSION['user_image'], 'data:image'))
+                    $imageSrc = (!empty($_SESSION['user_image']) && substr($_SESSION['user_image'], 0, 10) === 'data:image')
                         ? $_SESSION['user_image']
                         : './public/images/default-avatar.png';
 
