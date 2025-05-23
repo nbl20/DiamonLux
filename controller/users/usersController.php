@@ -65,7 +65,7 @@ class UserController
         $this->user->ajouterUtilisateur($nom, $prenom, $email, $mdp, $num_phone, $date_naissance, $ville, $adresse, $code_postal, $imageBlob, $statut, $droits);
 
         // Redirection après l'inscription
-        header('Location: http://localhost/promo284/diamonLuxV2/diamonLuxV2/index.php?page=connexion');
+        header('Location: ../..index.php?page=connexion');
         exit;
     }
 
@@ -105,7 +105,7 @@ class UserController
             //var_dump($_SESSION);
             //die;
             // Rediriger vers la page profil
-            header('Location: http://localhost/promo284/diamonLuxV2/diamonLuxV2/index.php');
+            header('Location: ../../index.php');
             exit;
         } else {
             die("Email ou mot de passe incorrect.");
