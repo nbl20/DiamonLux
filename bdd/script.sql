@@ -131,7 +131,7 @@
 CREATE DATABASE diamonlux2;
 USE diamonlux2;
 
--- Table des utilisateurs
+
 CREATE TABLE user (
   id INT(11) NOT NULL AUTO_INCREMENT,
   nom VARCHAR(35) NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE user (
   PRIMARY KEY (id)
 );
 
--- Table des articles
+
 CREATE TABLE article (
   id INT(11) NOT NULL AUTO_INCREMENT,
   nom VARCHAR(35) NOT NULL,
@@ -165,7 +165,6 @@ CREATE TABLE article (
   FOREIGN KEY (proprio) REFERENCES user(id) ON DELETE CASCADE
 );
 
--- Table des commentaires sur les articles
 CREATE TABLE commentaire_article (
   id INT(11) NOT NULL AUTO_INCREMENT,
   id_utilisateur INT(11) NOT NULL,
@@ -177,7 +176,6 @@ CREATE TABLE commentaire_article (
   FOREIGN KEY (id_article) REFERENCES article(id) ON DELETE CASCADE
 );
 
--- Table des commentaires entre utilisateurs
 CREATE TABLE commentaire_utilisateur (
   id INT(11) NOT NULL AUTO_INCREMENT,
   id_utilisateur_commentateur INT(11) NOT NULL,
@@ -189,7 +187,7 @@ CREATE TABLE commentaire_utilisateur (
   FOREIGN KEY (id_utilisateur_commenter) REFERENCES user(id) ON DELETE CASCADE
 );
 
--- Table des événements
+
 CREATE TABLE evenement (
   id INT(11) NOT NULL AUTO_INCREMENT,
   nom VARCHAR(35) NOT NULL,
@@ -201,7 +199,7 @@ CREATE TABLE evenement (
   PRIMARY KEY (id)
 );
 
--- Table des nouveautés
+
 CREATE TABLE nouveaute (
   id INT(11) NOT NULL AUTO_INCREMENT,
   nom VARCHAR(35) NOT NULL,
@@ -213,7 +211,7 @@ CREATE TABLE nouveaute (
   PRIMARY KEY (id)
 );
 
--- Table du panier
+
 CREATE TABLE panier (
   id INT(11) NOT NULL AUTO_INCREMENT,
   id_utilisateur INT(11) NOT NULL,
@@ -224,7 +222,6 @@ CREATE TABLE panier (
   FOREIGN KEY (id_article) REFERENCES article(id) ON DELETE CASCADE
 );
 
--- Table de participation aux événements
 CREATE TABLE participants (
   id INT(11) NOT NULL AUTO_INCREMENT,
   id_utilisateur INT(11) NOT NULL,

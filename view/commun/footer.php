@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="public/css/footer.css">
-
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">
@@ -12,9 +10,8 @@
             <h4>Navigation</h4>
             <ul>
                 <li><a href="index.php?page=acceuil">Accueil</a></li>
-                <li><a href="index.php?page=article">Articles</a></li>
-                <li><a href="index.php?page=nouveaute">Nouveautés</a></li>
-                <li><a href="index.php?page=evenement">Événements</a></li>
+                <li><a href="index.php?page=profil">Profil</a></li>
+                <li><a href="index.php?page=panier">Panier</a></li>
             </ul>
         </div>
 
@@ -29,3 +26,21 @@
         </div>
     </div>
 </footer>
+
+</div> <!-- fermeture de .wrapper -->
+<script>
+    const toggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    if (localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark-mode');
+    }
+
+    toggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
+    });
+</script>
+</body>
+
+</html>

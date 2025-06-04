@@ -61,3 +61,22 @@
         gap: 40px;
     }
 }
+
+/* À ajouter dans style.css ou global.css (pas forcément ici) */
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    min-height: 100vh;
+    /* prend toute la hauteur de l'écran */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    /* prend l'espace restant entre header et footer */
+}

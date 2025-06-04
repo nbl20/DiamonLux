@@ -95,3 +95,22 @@ h1 {
 .delete-btn:hover {
     background-color: #c0392b;
 }
+
+/* Centrage vertical + rectangle */
+main.center-rectangle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+/* Grand rectangle horizontal centré */
+.container-ventes {
+    max-width: 900px;
+    width: 100%;
+    background: white;
+    padding: 60px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
