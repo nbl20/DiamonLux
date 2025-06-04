@@ -12,7 +12,6 @@ class User
     {
         $hashPassword = password_hash($mdp, PASSWORD_BCRYPT);
 
-        // Modifié pour ne pas inclure 'image_type' si ce n'est pas dans la base de données
         $req = $this->bdd->prepare("
         INSERT INTO `user` (nom, prenom, email, password, num_phone, date_naissance, ville, adresse, code_postal, image, statut, droits)
         VALUES (:nom, :prenom, :email, :mdp, :num_phone, :date_naissance, :ville, :adresse, :code_postal, :image, :statut, :droits)
@@ -34,11 +33,14 @@ class User
             $req->bindValue(':image', null, PDO::PARAM_NULL);
         }
 
-        // Suppression de la ligne pour 'image_type', puisque la colonne n'existe pas
         $req->bindParam(':statut', $statut);
         $req->bindParam(':droits', $droits);
 
-        $req->execute();
+        // ✅ Exécution + capture d’erreur ici :
+        if (!$req->execute()) {
+            var_dump($req->errorInfo());
+            exit;
+        }
 
         return $this->bdd->lastInsertId();
     }
