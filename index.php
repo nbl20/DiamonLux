@@ -1,6 +1,10 @@
 <?php
 ob_start(); // Démarre la mise en mémoire tampon
 session_start();
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && in_array($_POST['action'], ['ajouter', 'retirer', 'achat_direct'])) {
+    include('controller/panier/panierController.php');
+    exit;
+}
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
