@@ -1,5 +1,15 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+echo "<pre>";
+var_dump($_POST);
+var_dump($_SESSION);
+echo "</pre>";
+exit;
+
 include('../../bdd/bdd.php');
 include('../../model/panier.php');
 
