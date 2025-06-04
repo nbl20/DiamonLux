@@ -65,8 +65,8 @@ class UserController
         $this->user->ajouterUtilisateur($nom, $prenom, $email, $mdp, $num_phone, $date_naissance, $ville, $adresse, $code_postal, $imageBlob, $statut, $droits);
 
         // Redirection après l'inscription
-        header('Location: ../..index.php?page=connexion');
-        exit;
+        header("Location: /index.php?page=connexion");
+        exit();
     }
 
     /**
