@@ -13,10 +13,18 @@ class Article
     public function ajouterArticle($userId, $nom, $type, $marque, $prix, $image)
     {
         $req = $this->bdd->prepare("
-            INSERT INTO article (proprio, nom, type, marque, prix, image, etat, date_vente)
-            VALUES (?, ?, ?, ?, ?, ?, 'en_vente', NOW())
-        ");
-        return $req->execute([$userId, $nom, $type, $marque, $prix, $image]);
+        INSERT INTO article (proprio, nom, type, marque, prix, image, etat, date_vente)
+        VALUES (?, ?, ?, ?, ?, ?, 'en_vente', NOW())
+    ");
+
+        if (!$req->execute([$userId, $nom, $type, $marque, $prix, $image])) {
+            echo "<pre>";
+            var_dump($req->errorInfo());
+            echo "</pre>";
+            exit;
+        }
+
+        return true;
     }
 
     // Modifier un article
