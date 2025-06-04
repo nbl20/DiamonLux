@@ -12,23 +12,28 @@ class Panier
     // Ajouter un article au panier
     public function ajouterAuPanier($userId, $articleId)
     {
-        $req = $this->bdd->prepare("
-        INSERT INTO panier (id_utilisateur, id_article)
-        VALUES (?, ?)
-    ");
+        $sql = "INSERT INTO panier (id_utilisateur, id_article) VALUES (?, ?)";
+        $req = $this->bdd->prepare($sql);
 
-        $result = $req->execute([$userId, $articleId]);
-
-        if (!$result) {
-            echo "<pre>";
-            print_r($req->errorInfo());
-            echo "</pre>";
+        if (!$req->execute([$userId, $articleId])) {
+            var_dump("Erreur d'insertion : ", $req->errorInfo());
             exit;
         }
 
-        return $result;
+        echo "Ajout réussi dans la BDD";
+        return true;
     }
 
+
+
+    public function retirerDuPanier($id_utilisateur, $id_article)
+    {
+        $sql = "DELETE FROM panier WHERE id_utilisateur = :id_utilisateur AND id_article = :id_article";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':id_article', $id_article, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 
     // Récupérer les articles du panier
     public function getArticles($userId)

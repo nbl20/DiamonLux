@@ -47,14 +47,14 @@ $vendeur = $userModel->getUserById($article['proprio']);
             <div class="article-actions">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <!-- Ajouter au panier -->
-                    <form method="POST" action="index.php">
+                    <form method="POST" action="index.php?page=panier">
                         <input type="hidden" name="action" value="ajouter">
                         <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
                         <button type="submit" class="btn-panier">🛒 Ajouter au panier</button>
                     </form>
 
                     <!-- Acheter maintenant -->
-                    <form method="POST" action="index.php">
+                    <form method="POST" action="index.php?page=panier">
                         <input type="hidden" name="action" value="achat_direct">
                         <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
                         <button type="submit" class="btn-acheter">💳 Acheter maintenant</button>
