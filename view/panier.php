@@ -10,6 +10,12 @@ include('./bdd/bdd.php');
 include('./model/Panier.php');
 $panierModel = new Panier($bdd);
 $articles = $panierModel->getArticles($userId);
+echo "<pre>";
+echo "User ID : " . $userId . "\n";
+var_dump($articles);
+echo "</pre>";
+exit;
+
 ?>
 
 <link rel="stylesheet" href="public/css/panier.css">
