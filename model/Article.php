@@ -10,25 +10,22 @@ class Article
     }
 
     // Ajouter un article
-    public function ajouterAuPanier($userId, $articleId)
+    public function ajouterArticle($userId, $nom, $type, $marque, $prix, $image)
     {
         $req = $this->bdd->prepare("
-        INSERT INTO panier (id_utilisateur, id_article)
-        VALUES (?, ?)
+        INSERT INTO article (proprio, nom, type, marque, prix, image, etat, date_vente)
+        VALUES (?, ?, ?, ?, ?, ?, 'en_vente', NOW())
     ");
 
-        $result = $req->execute([$userId, $articleId]);
-
-        if (!$result) {
+        if (!$req->execute([$userId, $nom, $type, $marque, $prix, $image])) {
             echo "<pre>";
-            print_r($req->errorInfo());
+            var_dump($req->errorInfo());
             echo "</pre>";
             exit;
         }
 
-        return $result;
+        return true;
     }
-
 
     // Modifier un article
     public function modifierArticle($articleId, $nom, $type, $marque, $prix, $image = null)
