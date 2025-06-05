@@ -22,7 +22,8 @@ if (!$article) {
 $vendeur = $userModel->getUserById($article['proprio']);
 ?>
 
-<link rel="stylesheet" href="public/css/article.css">
+<link rel="stylesheet" href="public/css/article.css?v=2">
+
 
 <div class="article-container">
     <h1><?= htmlspecialchars($article['nom']) ?></h1>
