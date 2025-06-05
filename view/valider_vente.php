@@ -12,7 +12,7 @@ $commandeModel = new Commande($bdd);
 $commandes = $commandeModel->getCommandesNonVuesPourVendeur($userId);
 ?>
 
-<link rel="stylesheet" href="public/css/valider_vente.css">
+<link rel="stylesheet" href="public/css/valider_vente.css?v=2">
 
 <div class="container-valider">
     <h1>✅ Valider les ventes en attente</h1>

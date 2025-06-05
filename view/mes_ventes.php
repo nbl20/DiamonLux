@@ -18,7 +18,7 @@ $ventes = $commandeModel->getVentesValideesByVendeur($userId);
 $totalGagne = 0;
 ?>
 
-<link rel="stylesheet" href="public/css/mes_ventes.css">
+<link rel="stylesheet" href="public/css/mes_ventes.css?v=2">
 
 <main class="<?= empty($ventes) ? 'center-rectangle' : '' ?>">
     <div class="container-ventes">
