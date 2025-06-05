@@ -87,7 +87,6 @@ function modifierArticle($articleModel)
     exit;
 }
 
-// ❌ Supprimer un article
 function supprimerArticle($articleModel)
 {
     if (!isset($_SESSION['user_id'], $_POST['article_id'])) {
@@ -96,14 +95,19 @@ function supprimerArticle($articleModel)
         exit;
     }
 
-    $article = $articleModel->getArticleById($_POST['article_id']);
-    if (!$article || $article['proprio'] != $_SESSION['user_id']) {
+    $userId = $_SESSION['user_id'];
+    $articleId = $_POST['article_id'];
+
+    $article = $articleModel->getArticleById($articleId);
+    if (!$article || $article['proprio'] != $userId) {
         $_SESSION['error'] = "Accès interdit.";
         header('Location: ../../index.php?page=article_utilisateur');
         exit;
     }
 
-    $articleModel->supprimerArticle($_POST['article_id']);
+    // ✅ Appel avec les deux arguments nécessaires
+    $articleModel->supprimerArticle($articleId, $userId);
+
     $_SESSION['success'] = "Article supprimé avec succès.";
     header('Location: ../../index.php?page=article_utilisateur');
     exit;
