@@ -1,10 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-
-
-
-include('../../bdd/bdd.php');
-include('../../model/panier.php');
+include(__DIR__ . '/../../bdd/bdd.php');
+include(__DIR__ . '/../../model/panier.php');
 
 $panier = new Panier($bdd);
 
@@ -21,8 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     switch ($action) {
         case 'ajouter':
             if ($panier->ajouterAuPanier($userId, $articleId)) {
-                header('Location: /promo284/diamonLuxV2/index.php?page=panier');
-
+                header('Location: ../../index.php?page=panier');
                 exit;
             } else {
                 echo "Erreur lors de l'ajout au panier.";

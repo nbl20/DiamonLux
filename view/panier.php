@@ -10,12 +10,12 @@ include('./bdd/bdd.php');
 include('./model/Panier.php');
 $panierModel = new Panier($bdd);
 $articles = $panierModel->getArticles($userId);
-echo "<pre>";
-echo "User ID : " . $userId . "\n";
-var_dump($articles);
-echo "</pre>";
-exit;
 
+// Debug (à commenter ou supprimer en prod)
+// echo "<pre>";
+// echo "User ID : " . $userId . "\n";
+// var_dump($articles);
+// echo "</pre>";
 ?>
 
 <link rel="stylesheet" href="public/css/panier.css">
@@ -34,6 +34,7 @@ exit;
                                 unset($_SESSION['error']); ?></div>
     <?php endif; ?>
 
+    <!-- ✅ Contenu -->
     <?php if (empty($articles)): ?>
         <p class="empty-msg">Votre panier est vide.</p>
     <?php else: ?>
@@ -48,7 +49,7 @@ exit;
                     <p><strong>Type :</strong> <?= htmlspecialchars($article['type']) ?></p>
                     <p><strong>Prix :</strong> <?= htmlspecialchars($article['prix']) ?> €</p>
 
-                    <form method="POST" action="controller/panier/panierController.php">
+                    <form method="POST" action="index.php?page=panier">
                         <input type="hidden" name="action" value="retirer">
                         <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
                         <button type="submit" class="btn-retirer">🗑 Retirer</button>
