@@ -18,7 +18,8 @@ $articles = $panierModel->getArticles($userId);
 // echo "</pre>";
 ?>
 
-<link rel="stylesheet" href="public/css/panier.css">
+<link rel="stylesheet" href="public/css/panier.css?v=2">
+
 
 <div class="panier-container">
     <h1>🛒 Mon Panier</h1>
