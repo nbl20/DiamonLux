@@ -1,10 +1,12 @@
+/* public/css/panier.css */
+
 .panier-container {
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 40px auto;
-    padding: 20px;
+    padding: 30px;
     background-color: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -12,39 +14,52 @@
     text-align: center;
     margin-bottom: 30px;
     color: #2c3e50;
+    font-size: 28px;
+}
+
+.success-msg,
+.error-msg {
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-weight: bold;
 }
 
 .success-msg {
-    color: green;
-    margin-bottom: 15px;
-    text-align: center;
+    background-color: #e0f8e0;
+    color: #2ecc71;
 }
 
 .error-msg {
-    color: red;
-    margin-bottom: 15px;
-    text-align: center;
+    background-color: #fbeaea;
+    color: #e74c3c;
 }
 
 .empty-msg {
     text-align: center;
     font-size: 18px;
     color: #777;
+    margin-top: 30px;
 }
 
 .articles-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
 }
 
 .article-card {
     background: #f8f8f8;
     padding: 15px;
     border-radius: 10px;
-    width: 30%;
+    width: 280px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .article-card:hover {
@@ -53,8 +68,9 @@
 
 .article-card img {
     width: 100%;
-    height: auto;
+    height: 180px;
     border-radius: 8px;
+    object-fit: cover;
     margin-bottom: 10px;
 }
 
@@ -62,22 +78,31 @@
     margin: 10px 0;
     font-size: 18px;
     color: #333;
+    text-align: center;
 }
 
 .article-card p {
     margin: 5px 0;
     font-size: 14px;
     color: #555;
+    text-align: center;
+}
+
+.article-card form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .btn-retirer {
     margin-top: 10px;
     background-color: #c0392b;
     color: white;
-    padding: 8px 12px;
+    padding: 8px 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .btn-retirer:hover {
@@ -85,20 +110,20 @@
 }
 
 .validate-btn-container {
-    text-align: right;
+    text-align: center;
     margin-top: 30px;
 }
 
 .btn-valider {
     background-color: #27ae60;
     color: white;
-    padding: 12px 20px;
+    padding: 12px 24px;
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .btn-valider:hover {
-    background-color: #219150;
+    background-color: #1e8449;
 }
