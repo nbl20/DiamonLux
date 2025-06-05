@@ -22,7 +22,7 @@ $articles = $articleModel->getArticlesPagines($offset, $limit, $searchType, $use
 ?>
 
 <!-- ✅ Lien CSS pour styliser l'accueil -->
-<link rel="stylesheet" href="public/css/accueil.css">
+<link rel="stylesheet" href="public/css/accueil.css?v=2">
 
 <div class="accueil-container">
     <h1 class="titre-accueil">Articles en vente</h1>
