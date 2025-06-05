@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 include(__DIR__ . '/../../bdd/bdd.php');
-include(__DIR__ . '/../../model/panier.php');
+include(__DIR__ . '/../../model/Panier.php');
 
 $panier = new Panier($bdd);
 
