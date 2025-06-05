@@ -49,7 +49,7 @@ $articles = $panierModel->getArticles($userId);
                     <p><strong>Type :</strong> <?= htmlspecialchars($article['type']) ?></p>
                     <p><strong>Prix :</strong> <?= htmlspecialchars($article['prix']) ?> €</p>
 
-                    <form method="POST" action="index.php?page=panier">
+                    <form method="POST" action="controller/panier/panierController.php">
                         <input type="hidden" name="action" value="retirer">
                         <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
                         <button type="submit" class="btn-retirer">🗑 Retirer</button>
