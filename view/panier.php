@@ -22,7 +22,7 @@ $articles = $panierModel->getArticles($userId);
 
 
 <div class="panier-container">
-    <h1>🛒 Mon Panie</h1>
+    <h1>🛒 Mon Panier</h1>
 
     <!-- ✅ Messages -->
     <?php if (isset($_SESSION['success'])): ?>
