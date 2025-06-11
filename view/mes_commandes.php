@@ -1,29 +1,12 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 if (!isset($_SESSION['user_id'])) {
     header('Location: index.php?page=connexion');
     exit;
 }
 
 include('./bdd/bdd.php');
-include('./model/Commande.php');
 
 $userId = $_SESSION['user_id'];
-$commandeModel = new Commande($bdd);
-
-// ✅ Alerte commande expédiée
-$alertes = $commandeModel->getCommandesExpedieesNonVues($userId);
-if (!empty($alertes)) {
-    echo '<div class="alerte-expedition">
-        📦 Une ou plusieurs commandes ont été expédiées ! Vérifiez vos achats.
-    </div>';
-    $commandeModel->marquerAlertesCommeVues($userId);
-}
-
-// ✅ Liste commandes
 $req = $bdd->prepare("
     SELECT c.*, a.nom AS article_nom, a.marque, a.prix, a.image
     FROM commande c
@@ -33,78 +16,22 @@ $req = $bdd->prepare("
 ");
 $req->execute([$userId]);
 $commandes = $req->fetchAll(PDO::FETCH_ASSOC);
+
 $totalDepense = 0;
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Mes Commandes</title>
     <link rel="stylesheet" href="public/css/mes_commandes.css">
-    <style>
-        .btn {
-            background-color: #007bff;
-            color: white;
-            padding: 12px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-block;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-            transform: scale(1.03);
-        }
-
-        .commande-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .commande-card {
-            border: 1px solid #ccc;
-            padding: 15px;
-            border-radius: 8px;
-            width: 300px;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .commande-card img {
-            max-width: 100%;
-            border-radius: 4px;
-        }
-
-        .total-depense {
-            margin-top: 30px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .alerte-expedition {
-            background-color: #fffbcc;
-            color: #856404;
-            padding: 15px;
-            border: 1px solid #ffeeba;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-    </style>
 </head>
+
 <body>
 
     <h1>📦 Mes Achats</h1>
-
-    <a href="rapport_mensuel.php" class="btn">📄 Télécharger le rapport PDF</a>
 
     <?php if (empty($commandes)): ?>
         <p>Vous n'avez encore rien acheté.</p>
@@ -129,4 +56,5 @@ $totalDepense = 0;
     <?php endif; ?>
 
 </body>
+
 </html>

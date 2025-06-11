@@ -15,6 +15,7 @@ class Commande
         $stmt = $this->bdd->prepare("INSERT INTO commande (id_article, id_acheteur, date_achat, statut) VALUES (?, ?, NOW(), 'en_attente')");
         $stmt->execute([$id_article, $id_acheteur]);
 
+        // Mettre à jour l'article comme en attente
         $this->bdd->prepare("UPDATE article SET etat = 'en_attente' WHERE id = ?")->execute([$id_article]);
     }
 
@@ -33,7 +34,7 @@ class Commande
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Récupérer les commandes non vues pour un vendeur
+    // Récupérer les commandes reçues pour un vendeur
     public function getCommandesNonVuesPourVendeur($vendeurId)
     {
         $sql = "
@@ -58,7 +59,8 @@ class Commande
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Valider une commande
+
+    // Valider une commande (changer son statut)
     public function validerCommande($commandeId)
     {
         $stmt = $this->bdd->prepare("UPDATE commande SET statut = 'valider' WHERE id = ?");
@@ -71,60 +73,19 @@ class Commande
         $stmt = $this->bdd->prepare("UPDATE article SET etat = 'vendu' WHERE id = ?");
         return $stmt->execute([$articleId]);
     }
-
-    // Ventes validées par vendeur
     public function getVentesValideesByVendeur($vendeurId)
     {
         $sql = "
-            SELECT c.*, a.nom, a.marque, a.prix, a.image, u.id AS id_acheteur
-            FROM commande c
-            JOIN article a ON c.id_article = a.id
-            JOIN user u ON c.id_acheteur = u.id
-            WHERE a.proprio = ? AND c.statut = 'valider'
-            ORDER BY c.date_achat DESC
-        ";
+        SELECT c.*, a.nom, a.marque, a.prix, a.image, u.id AS id_acheteur
+        FROM commande c
+        JOIN article a ON c.id_article = a.id
+        JOIN user u ON c.id_acheteur = u.id
+        WHERE a.proprio = ? AND c.statut = 'valider'
+        ORDER BY c.date_achat DESC
+    ";
 
         $stmt = $this->bdd->prepare($sql);
         $stmt->execute([$vendeurId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // ✅ Clients ayant acheté un article ce mois
-    public function getClientsParArticleEtMois($id_article, $mois, $annee)
-    {
-        $sql = "
-            SELECT DISTINCT u.nom, u.prenom
-            FROM commande c
-            JOIN user u ON u.id = c.id_acheteur
-            WHERE c.id_article = ?
-            AND MONTH(c.date_achat) = ?
-            AND YEAR(c.date_achat) = ?
-        ";
-        $stmt = $this->bdd->prepare($sql);
-        $stmt->execute([$id_article, $mois, $annee]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // ✅ Alertes pour commandes expédiées non vues
-    public function getCommandesExpedieesNonVues($userId)
-    {
-        $sql = "SELECT * FROM commande 
-                WHERE id_acheteur = ? 
-                AND statut = 'expédiée' 
-                AND alerte_vue = 0";
-        $stmt = $this->bdd->prepare($sql);
-        $stmt->execute([$userId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function marquerAlertesCommeVues($userId)
-    {
-        $sql = "UPDATE commande 
-                SET alerte_vue = 1 
-                WHERE id_acheteur = ? 
-                AND statut = 'expédiée' 
-                AND alerte_vue = 0";
-        $stmt = $this->bdd->prepare($sql);
-        $stmt->execute([$userId]);
     }
 }

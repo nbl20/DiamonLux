@@ -1,74 +1,71 @@
 <?php
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php?page=connexion');
+if (!isset($_GET['id'])) {
+    echo "Article introuvable.";
     exit;
 }
 
 include('./bdd/bdd.php');
 include('./model/Article.php');
-include('./model/Commande.php'); // 🔹 Ajout pour utiliser la fonction
-$articleModel = new Article($bdd);
-$commandeModel = new Commande($bdd);
+include('./model/Users.php');
 
-$articles = $articleModel->getArticlesByUser($_SESSION['user_id']);
-$mois = date('m');
-$annee = date('Y');
+$articleModel = new Article($bdd);
+$userModel = new User($bdd);
+
+$articleId = (int) $_GET['id'];
+$article = $articleModel->getArticleById($articleId);
+
+if (!$article) {
+    echo "Article non trouvé.";
+    exit;
+}
+
+$vendeur = $userModel->getUserById($article['proprio']);
 ?>
 
-<link rel="stylesheet" href="public/css/mes_articles.css">
-<main>
-    <div class="container-articles">
-        <h1>🛍️ Mes articles en vente</h1>
+<link rel="stylesheet" href="public/css/article.css?v=2">
 
-        <?php if (count($articles) === 0): ?>
-            <p class="empty-message">Vous n'avez encore publié aucun article.</p>
-        <?php else: ?>
-            <div class="articles-grid">
-                <?php foreach ($articles as $article): ?>
-                    <div class="article-card">
-                        <?php if (!empty($article['image'])): ?>
-                            <img src="data:image/jpeg;base64,<?= base64_encode($article['image']) ?>" alt="image" class="article-image">
-                        <?php endif; ?>
 
-                        <div class="article-info">
-                            <h3><?= htmlspecialchars($article['nom']) ?> - <?= htmlspecialchars($article['marque']) ?></h3>
-                            <p><strong>Type :</strong> <?= htmlspecialchars($article['type']) ?></p>
-                            <p><strong>Prix :</strong> <?= htmlspecialchars($article['prix']) ?> €</p>
-                            <p><strong>État :</strong> <?= htmlspecialchars($article['etat']) ?></p>
-                        </div>
+<div class="article-container">
+    <h1><?= htmlspecialchars($article['nom']) ?></h1>
 
-                        <!-- ✅ Liste des clients ayant acheté cet article ce mois -->
-                        <div class="clients-acheteurs">
-                            <h4>👥 Acheté ce mois-ci par :</h4>
-                            <ul>
-                                <?php
-                                $clients = $commandeModel->getClientsParArticleEtMois($article['id'], $mois, $annee);
-                                if (!empty($clients)):
-                                    foreach ($clients as $client): ?>
-                                        <li><?= htmlspecialchars($client['prenom']) ?> <?= htmlspecialchars($client['nom']) ?></li>
-                                    <?php endforeach;
-                                else: ?>
-                                    <li>Aucun client ce mois</li>
-                                <?php endif; ?>
-                            </ul>
-                        </div>
+    <div class="article-content">
+        <!-- Image -->
+        <div class="article-image">
+            <?php if (!empty($article['image'])): ?>
+                <img src="data:image/jpeg;base64,<?= base64_encode($article['image']) ?>" alt="Image article">
+            <?php endif; ?>
+        </div>
 
-                        <!-- 🔧 Actions -->
-                        <div class="actions">
-                            <form action="controller/article/articleController.php" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
-                                <input type="hidden" name="action" value="supprimer">
-                                <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
-                                <button type="submit" class="delete-btn">🗑️ Supprimer</button>
-                            </form>
+        <!-- Détails -->
+        <div class="article-details">
+            <p><strong>Type :</strong> <?= htmlspecialchars($article['type']) ?></p>
+            <p><strong>Marque :</strong> <?= htmlspecialchars($article['marque']) ?></p>
+            <p><strong>Prix :</strong> <span class="prix"><?= htmlspecialchars($article['prix']) ?> €</span></p>
+            <p><strong>État :</strong> <?= htmlspecialchars($article['etat']) ?></p>
+            <p><strong>Date de mise en vente :</strong> <?= htmlspecialchars($article['date_vente']) ?></p>
+            <p><strong>Vendu par :</strong> <?= htmlspecialchars($vendeur['prenom'] . ' ' . $vendeur['nom']) ?></p>
 
-                            <form action="index.php?page=modifier_article" method="POST">
-                                <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
-                                <button type="submit" class="edit-btn">✏️ Modifier</button>
-                            </form>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+            <div class="article-actions">
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <!-- Ajouter au panier -->
+                    <form method="POST" action="controller/panier/panierController.php">
+                        <input type="hidden" name="action" value="ajouter">
+                        <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
+                        <button type="submit" class="btn-panier">🛒 Ajouter au panier</button>
+                    </form>
+
+                    <!-- Acheter maintenant -->
+                    <form method="POST" action="controller/panier/panierController.php">
+                        <input type="hidden" name="action" value="achat_direct">
+                        <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
+                        <button type="submit" class="btn-acheter">💳 Acheter maintenant</button>
+                    </form>
+                <?php else: ?>
+                    <a href="index.php?page=connexion" class="btn-panier">🛒 Connectez-vous pour acheter</a>
+                <?php endif; ?>
             </div>
-        <?php endif; ?>
+
+        </div>
     </div>
-</main>
+</div>
+</div>
