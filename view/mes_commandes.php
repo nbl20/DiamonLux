@@ -83,6 +83,7 @@ $totalDepense = 0;
 
     <!-- 📄 Bouton de génération PDF -->
     <a href="rapport_mensuel.php" class="btn">📄 Télécharger le rapport PDF</a>
+xml_error_string
 
     <?php if (empty($commandes)): ?>
         <p>Vous n'avez encore rien acheté.</p>
