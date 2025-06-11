@@ -34,7 +34,7 @@ class Commande
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Récupérer les commandes reçues pour un vendeur
+    // Récupérer les commandes non vues pour un vendeur
     public function getCommandesNonVuesPourVendeur($vendeurId)
     {
         $sql = "
@@ -59,8 +59,7 @@ class Commande
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-    // Valider une commande (changer son statut)
+    // Valider une commande
     public function validerCommande($commandeId)
     {
         $stmt = $this->bdd->prepare("UPDATE commande SET statut = 'valider' WHERE id = ?");
@@ -73,19 +72,37 @@ class Commande
         $stmt = $this->bdd->prepare("UPDATE article SET etat = 'vendu' WHERE id = ?");
         return $stmt->execute([$articleId]);
     }
+
+    // Ventes validées
     public function getVentesValideesByVendeur($vendeurId)
     {
         $sql = "
-        SELECT c.*, a.nom, a.marque, a.prix, a.image, u.id AS id_acheteur
-        FROM commande c
-        JOIN article a ON c.id_article = a.id
-        JOIN user u ON c.id_acheteur = u.id
-        WHERE a.proprio = ? AND c.statut = 'valider'
-        ORDER BY c.date_achat DESC
-    ";
+            SELECT c.*, a.nom, a.marque, a.prix, a.image, u.id AS id_acheteur
+            FROM commande c
+            JOIN article a ON c.id_article = a.id
+            JOIN user u ON c.id_acheteur = u.id
+            WHERE a.proprio = ? AND c.statut = 'valider'
+            ORDER BY c.date_achat DESC
+        ";
 
         $stmt = $this->bdd->prepare($sql);
         $stmt->execute([$vendeurId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // ✅ NOUVELLE FONCTION : Clients ayant acheté un article sur un mois donné
+    public function getClientsParArticleEtMois($id_article, $mois, $annee)
+    {
+        $sql = "
+            SELECT DISTINCT u.nom, u.prenom
+            FROM commande c
+            JOIN user u ON u.id = c.id_acheteur
+            WHERE c.id_article = ?
+            AND MONTH(c.date_achat) = ?
+            AND YEAR(c.date_achat) = ?
+        ";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute([$id_article, $mois, $annee]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
