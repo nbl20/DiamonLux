@@ -9,8 +9,21 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 include('./bdd/bdd.php');
+include('./model/Commande.php');
 
 $userId = $_SESSION['user_id'];
+$commandeModel = new Commande($bdd);
+
+// ✅ Alerte commande expédiée
+$alertes = $commandeModel->getCommandesExpedieesNonVues($userId);
+if (!empty($alertes)) {
+    echo '<div class="alerte-expedition">
+        📦 Une ou plusieurs commandes ont été expédiées ! Vérifiez vos achats.
+    </div>';
+    $commandeModel->marquerAlertesCommeVues($userId);
+}
+
+// ✅ Liste commandes
 $req = $bdd->prepare("
     SELECT c.*, a.nom AS article_nom, a.marque, a.prix, a.image
     FROM commande c
@@ -20,7 +33,6 @@ $req = $bdd->prepare("
 ");
 $req->execute([$userId]);
 $commandes = $req->fetchAll(PDO::FETCH_ASSOC);
-
 $totalDepense = 0;
 ?>
 
@@ -46,6 +58,7 @@ $totalDepense = 0;
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         .btn:hover {
             background-color: #0056b3;
             transform: scale(1.03);
@@ -75,15 +88,23 @@ $totalDepense = 0;
             font-size: 18px;
             font-weight: bold;
         }
+
+        .alerte-expedition {
+            background-color: #fffbcc;
+            color: #856404;
+            padding: 15px;
+            border: 1px solid #ffeeba;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <h1>📦 Mes Achats</h1>
 
-    <!-- 📄 Bouton de génération PDF -->
     <a href="rapport_mensuel.php" class="btn">📄 Télécharger le rapport PDF</a>
-xml_error_string
 
     <?php if (empty($commandes)): ?>
         <p>Vous n'avez encore rien acheté.</p>

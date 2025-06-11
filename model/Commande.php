@@ -15,7 +15,6 @@ class Commande
         $stmt = $this->bdd->prepare("INSERT INTO commande (id_article, id_acheteur, date_achat, statut) VALUES (?, ?, NOW(), 'en_attente')");
         $stmt->execute([$id_article, $id_acheteur]);
 
-        // Mettre à jour l'article comme en attente
         $this->bdd->prepare("UPDATE article SET etat = 'en_attente' WHERE id = ?")->execute([$id_article]);
     }
 
@@ -73,7 +72,7 @@ class Commande
         return $stmt->execute([$articleId]);
     }
 
-    // Ventes validées
+    // Ventes validées par vendeur
     public function getVentesValideesByVendeur($vendeurId)
     {
         $sql = "
@@ -90,7 +89,7 @@ class Commande
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // ✅ NOUVELLE FONCTION : Clients ayant acheté un article sur un mois donné
+    // ✅ Clients ayant acheté un article ce mois
     public function getClientsParArticleEtMois($id_article, $mois, $annee)
     {
         $sql = "
@@ -104,5 +103,28 @@ class Commande
         $stmt = $this->bdd->prepare($sql);
         $stmt->execute([$id_article, $mois, $annee]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // ✅ Alertes pour commandes expédiées non vues
+    public function getCommandesExpedieesNonVues($userId)
+    {
+        $sql = "SELECT * FROM commande 
+                WHERE id_acheteur = ? 
+                AND statut = 'expédiée' 
+                AND alerte_vue = 0";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function marquerAlertesCommeVues($userId)
+    {
+        $sql = "UPDATE commande 
+                SET alerte_vue = 1 
+                WHERE id_acheteur = ? 
+                AND statut = 'expédiée' 
+                AND alerte_vue = 0";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute([$userId]);
     }
 }
